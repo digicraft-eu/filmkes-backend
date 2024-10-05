@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from db.connection import MoviesDBConnection
 from datetime import date
+import db.movies
+import db.scores
 
 router = APIRouter(prefix="/movies")
 
@@ -14,18 +15,11 @@ class MovieSnippet(BaseModel):
 
 @router.get("", response_model=list[MovieSnippet], tags=["movies"])
 async def get_popular():
-    with MoviesDBConnection() as cursor:
-        query = cursor.execute(
-            """
-            SELECT id, title, poster_path
-            FROM movies
-            """
-        )
-        result = query.fetchall()
+    movies = db.movies.list_movies()
 
     return [
         MovieSnippet(id=id, title=title, poster_path=poster_path)
-        for (id, title, poster_path) in result
+        for (id, title, poster_path) in movies
     ]
 
 
@@ -35,29 +29,24 @@ class MovieDetails(BaseModel):
     poster_path: str
     overview: str
     release_date: date
+    score: int | None
 
 
 @router.get("/{movie_id}", response_model=MovieDetails | None, tags=["movies"])
 async def get_movie_details(movie_id: int):
-    with MoviesDBConnection() as cursor:
-        query = cursor.execute(
-            """
-            SELECT id, title, poster_path, overview, release_date
-            FROM movies
-            WHERE id = ?
-            """,
-            (movie_id,),
-        )
-        result = query.fetchone()
+    movie = db.movies.get_details(movie_id)
 
-    if result is None:
+    if movie is None:
         raise HTTPException(status_code=404, detail="Movie not found")
 
-    (id, title, poster_path, overview, release_date) = result
+    score = db.scores.get_movie_score_db(movie_id)
+    (id, title, poster_path, overview, release_date) = movie
+
     return MovieDetails(
         id=id,
         title=title,
         poster_path=poster_path,
         overview=overview,
         release_date=release_date,
+        score=score,
     )
