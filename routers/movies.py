@@ -1,7 +1,5 @@
 from fastapi import APIRouter
 from util.tmdb import TMDBClientDI, Movie, MovieDetails
-from pydantic import BaseModel
-from datetime import date
 
 router = APIRouter(prefix="/movies")
 
