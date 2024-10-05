@@ -1,18 +1,12 @@
 # What is this?
-This site lists out some movies from TMDB.  
-The TMDB api is only used to GET info from the movies. We won't use the api to write data.  
-
-We also have a local sqlite database that we'll use to keep track of the score that the user gave to a movie or whether or not the user has "favorited" the movie.  
+This site lists out some movies that we have in a local sqlite database.  
+data.  
+We also keep track of the score that the user gave to a movie or whether or not the user has "favorited" the movie.  
 For this exercise we'll assume we only have 1 user that uses the application.  
 So you don't need to think of authentication and authorization. 
 
 
 # Running locally
-## Create a `.env` file.
-- Copy `.env.sample`
-- Enter a value for `TMDB_API_KEY`
-
-You can get an api key by [creating an account at TMDB](https://www.themoviedb.org/login?to=read_me&redirect=%2Freference%2Fintro%2Fauthentication)
 
 ## Install `uv`
 - Mac/Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`
@@ -30,15 +24,21 @@ Or, if make isn't installed: `uv run fastapi dev --port 3000`
 
 
 # Local database structure
-There's 2 tables in the sqlite database, these are their columns:
+There's 3 tables in the sqlite database, these are their columns:
 
-1. `scores`
+1. `movies`
+   -  id: integer, primary key
+   -  title: text
+   -  poster_path: text
+   -  overview: text
+   -  release_date: text
+2. `scores`
    - id: integer, primary key
-   - movie_id: integer
+   - movie_id: integer (references `movies.id`)
    - score: integer
-2. `favorites`
+3. `favorites`
    - id: integer, primary key
-   - movie_id: integer
+   - movie_id: integer (references `movies.id`)
 
 `scores` keeps track of what score a user gave a certain movie. (No record means the user hasn't scored this movie yet)  
 If there's a record in the `favorites` tables for a certain movie we'll assume the user has favorited the movie, if there's no record, the user hasn't 
@@ -47,13 +47,19 @@ favorited the movie.
 
 # Assignment
 
-## Implement the favorites feature. 
+## 1. Implement the favorites feature. 
 We want the user to be able to keep track of their favorite movies.  
 - When the user opens a movie's detail page they should be able to see if they've marked a movie as favorite or not
 - On the movie detail page they should be able to add a movie to their favorites
-- They should also be able to remove a movie from their favorites 
+- They should also be able to remove a movie from their favorites
+
+## 2. Show the date next to the title
+- The date should be formatted like this: 5 Oct 2024
  
-## Create a favorites overview page
+## 3. Create a favorites overview page
 - The user should be able to get a quick overview of all the movies that they have favorited
 - The movies should be ordened by the score the user gave to the movies.
   The highest rated movie should be first
+
+# Tools
+You're allowed to use the internet, install new npm modules, etc
