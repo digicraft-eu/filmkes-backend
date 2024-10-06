@@ -1,6 +1,5 @@
 # What is this?
 This site lists out some movies that we have in a local sqlite database.  
-data.  
 We also keep track of the score that the user gave to a movie or whether or not the user has "favorited" the movie.  
 For this exercise we'll assume we only have 1 user that uses the application.  
 So you don't need to think of authentication and authorization. 
