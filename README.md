@@ -1,8 +1,8 @@
 # What is this?
 This site lists out some movies that we have in a local sqlite database.  
-We also keep track of the score that the user gave to a movie or whether or not the user has "favorited" the movie.  
+We also keep track of the score that the user gave to a movie and whether or not the user has "favorited" the movie.  
 For this exercise we'll assume we only have 1 user that uses the application.  
-So you don't need to think of authentication and authorization. 
+So you don't need to think of authentication and authorization.  
 
 
 # Running locally
@@ -53,7 +53,7 @@ We want the user to be able to keep track of their favorite movies.
 - They should also be able to remove a movie from their favorites
 
 ## 2. Show the date next to the title
-- The date should be formatted like this: 5 Oct 2024
+- The date should be formatted like this: 5 Oct, 2024
  
 ## 3. Create a favorites overview page
 - The user should be able to get a quick overview of all the movies that they have favorited
@@ -61,4 +61,7 @@ We want the user to be able to keep track of their favorite movies.
   The highest rated movie should be first
 
 # Tools
-You're allowed to use the internet, install new npm modules, etc
+You're allowed to use the internet, install new npm modules, etc  
+ChatGPT usage is allowed, but you're not allowed to copy or type any of the application's code to ChatGPT.  
+This means you're allowed to use it for general questions like you would use Google.  
+Remember, you're also allowed to ask us questions!
